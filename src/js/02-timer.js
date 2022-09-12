@@ -4,13 +4,21 @@ import 'flatpickr/dist/flatpickr.min.css';
 require('flatpickr/dist/themes/material_orange.css');
 // references for our input and timer value
 const refs = {
+  inputDate: document.querySelector('#datetime-picker '),
   setTimerBtn: document.querySelector('[data-start]'),
   daysSpan: document.querySelector('[data-days]'),
   hoursSpan: document.querySelector('[data-hours]'),
   minutesSpan: document.querySelector('[data-minutes]'),
   secondsSpan: document.querySelector('[data-seconds]'),
 };
-const { setTimerBtn, daysSpan, hoursSpan, minutesSpan, secondsSpan } = refs;
+const {
+  inputDate,
+  setTimerBtn,
+  daysSpan,
+  hoursSpan,
+  minutesSpan,
+  secondsSpan,
+} = refs;
 // default value of current time which we choose
 let currentTime = new Date();
 let selectedDatesUTC = 0;
@@ -34,10 +42,11 @@ const options = {
     } else setTimerBtn.disabled = false;
   },
 };
-flatpickr('#datetime-picker', options);
+flatpickr(inputDate, options);
 // init
 
 function toStartTimer() {
+  inputDate.disabled = true;
   setTimerBtn.disabled = true;
   intervalId = setInterval(() => {
     let nowUTC = new Date().getTime();
@@ -57,8 +66,6 @@ function getTimerValue(now) {
   let timerValue = convertMs(selectedDatesUTC - now);
   return ({ days, hours, minutes, seconds } = timerValue);
 }
-
-// add calendar with options from flatpickr
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
