@@ -20,6 +20,7 @@ const {
   secondsSpan,
 } = refs;
 // default value of current time which we choose
+let selectedTime;
 let currentTime = new Date();
 let selectedDatesUTC = 0;
 let intervalId = null;
