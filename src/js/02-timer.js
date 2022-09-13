@@ -25,6 +25,7 @@ let selectedDatesUTC = 0;
 let intervalId = null;
 setTimerBtn.disabled = true;
 setTimerBtn.addEventListener('click', toStartTimer);
+
 function toStartTimer() {
   inputDate.disabled = true;
   setTimerBtn.disabled = true;
@@ -41,9 +42,10 @@ function toStartTimer() {
     secondsSpan.textContent = padStart(seconds);
   }, 1000);
 }
+
 function getTimerValue(now) {
   let timerValue = convertMs(selectedDatesUTC - now);
-  return { days, hours, minutes, seconds };
+  return ({ days, hours, minutes, seconds } = timerValue);
 }
 // disable button till we choose date in future
 
