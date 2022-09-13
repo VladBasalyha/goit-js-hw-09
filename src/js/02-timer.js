@@ -43,7 +43,7 @@ function toStartTimer() {
 }
 function getTimerValue(now) {
   let timerValue = convertMs(selectedDatesUTC - now);
-  return days, hours, minutes, (seconds = timerValue);
+  return ({ days, hours, minutes, seconds } = timerValue);
 }
 // disable button till we choose date in future
 
@@ -54,13 +54,13 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    selectedDatesUTC = selectedDates[0].getTime();
-    if (selectedDates[0].getTime() < currentTime.getTime()) {
-      Notiflix.Notify.failure('Please choose a date in the future', {
-        timeout: 2000,
-      });
-      setTimerBtn.disabled = true;
-    } else setTimerBtn.disabled = false;
+    if (selectedDates[0].getTime() <= Date.now()) {
+      Notify.failure('Please choose a date in the future');
+      // selectedDates[0] = new Date();
+    } else {
+      selectedTime = selectedDates[0];
+      refs.startBtn.disabled = false;
+    }
   },
 };
 flatpickr(inputDate, options);
