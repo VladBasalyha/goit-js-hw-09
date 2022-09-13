@@ -45,7 +45,7 @@ function toStartTimer() {
 
 function getTimerValue(now) {
   let timerValue = convertMs(selectedDatesUTC - now);
-  return ({ daysData, hours, minutes, seconds } = timerValue);
+  return ({ daysData, hoursData, minutesData, secondsData } = timerValue);
 }
 // disable button till we choose date in future
 
@@ -76,11 +76,11 @@ function convertMs(ms) {
   // Remaining daysData
   const daysData = Math.floor(ms / day);
   // Remaining hours
-  const hours = Math.floor((ms % day) / hour);
+  const hoursData = Math.floor((ms % day) / hour);
   // Remaining minutes
-  const minutes = Math.floor(((ms % day) % hour) / minute);
+  const minutesData = Math.floor(((ms % day) % hour) / minute);
   // Remaining seconds
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+  const secondsData = Math.floor((((ms % day) % hour) % minute) / second);
 
   return { daysData, hours, minutes, seconds };
 }
