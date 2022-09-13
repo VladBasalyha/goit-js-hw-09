@@ -7,7 +7,7 @@ const refs = {
 };
 const { inputDelay, inputAmount, inputStep, submitBtn } = refs;
 
-let delayValue = Number;
+let delayValue = Number(inputDelay.textContent);
 console.log(inputDelay, inputStep, inputAmount, submitBtn);
 
 submitBtn.addEventListener('click', onSubmitBtn);
