@@ -43,7 +43,7 @@ function toStartTimer() {
 }
 function getTimerValue(now) {
   let timerValue = convertMs(selectedDatesUTC - now);
-  return ({ days, hours, minutes, seconds } = timerValue);
+  return days, hours, minutes, (seconds = timerValue);
 }
 // disable button till we choose date in future
 
