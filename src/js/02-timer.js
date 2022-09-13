@@ -32,11 +32,11 @@ function toStartTimer() {
   intervalId = setInterval(() => {
     let nowUTC = new Date().getTime();
     getTimerValue(nowUTC);
-    let sumDateValue = days + hours + minutes + seconds;
+    let sumDateValue = daysData + hours + minutes + seconds;
     if (sumDateValue === 0) {
       clearInterval(intervalId);
     }
-    daysSpan.textContent = padStart(days);
+    daysSpan.textContent = padStart(daysData);
     hoursSpan.textContent = padStart(hours);
     minutesSpan.textContent = padStart(minutes);
     secondsSpan.textContent = padStart(seconds);
@@ -45,7 +45,7 @@ function toStartTimer() {
 
 function getTimerValue(now) {
   let timerValue = convertMs(selectedDatesUTC - now);
-  return ({ days, hours, minutes, seconds } = timerValue);
+  return ({ daysData, hours, minutes, seconds } = timerValue);
 }
 // disable button till we choose date in future
 
@@ -73,8 +73,8 @@ function convertMs(ms) {
   const hour = minute * 60;
   const day = hour * 24;
 
-  // Remaining days
-  const days = Math.floor(ms / day);
+  // Remaining daysData
+  const daysData = Math.floor(ms / day);
   // Remaining hours
   const hours = Math.floor((ms % day) / hour);
   // Remaining minutes
@@ -82,7 +82,7 @@ function convertMs(ms) {
   // Remaining seconds
   const seconds = Math.floor((((ms % day) % hour) % minute) / second);
 
-  return { days, hours, minutes, seconds };
+  return { daysData, hours, minutes, seconds };
 }
 
 function padStart(numb) {
