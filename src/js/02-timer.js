@@ -23,9 +23,30 @@ const {
 let currentTime = new Date();
 let selectedDatesUTC = 0;
 let intervalId = null;
-setTimerBtn.addEventListener('click', toStartTimer);
-// disable button till we choose date in future
 setTimerBtn.disabled = true;
+setTimerBtn.addEventListener('click', toStartTimer);
+function toStartTimer() {
+  inputDate.disabled = true;
+  setTimerBtn.disabled = true;
+  intervalId = setInterval(() => {
+    let nowUTC = new Date().getTime();
+    getTimerValue(nowUTC);
+    let sumDateValue = days + hours + minutes + seconds;
+    if (sumDateValue === 0) {
+      clearInterval(intervalId);
+    }
+    daysSpan.textContent = padStart(days);
+    hoursSpan.textContent = padStart(hours);
+    minutesSpan.textContent = padStart(minutes);
+    secondsSpan.textContent = padStart(seconds);
+  }, 1000);
+}
+function getTimerValue(now) {
+  let timerValue = convertMs(selectedDatesUTC - now);
+  return ({ days, hours, minutes, seconds } = timerValue);
+}
+// disable button till we choose date in future
+
 // options for flatpickr library
 const options = {
   enableTime: true,
@@ -43,29 +64,6 @@ const options = {
   },
 };
 flatpickr(inputDate, options);
-// init
-
-function toStartTimer() {
-  inputDate.disabled = true;
-  setTimerBtn.disabled = true;
-  intervalId = setInterval(() => {
-    let nowUTC = new Date().getTime();
-    getTimerValue(nowUTC);
-    let sumDateValue = days + hours + minutes + seconds;
-
-    if (sumDateValue === 0) {
-      clearInterval(intervalId);
-    }
-    daysSpan.textContent = padStart(days);
-    hoursSpan.textContent = padStart(hours);
-    minutesSpan.textContent = padStart(minutes);
-    secondsSpan.textContent = padStart(seconds);
-  }, 1000);
-}
-function getTimerValue(now) {
-  let timerValue = convertMs(selectedDatesUTC - now);
-  return ({ days, hours, minutes, seconds } = timerValue);
-}
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
