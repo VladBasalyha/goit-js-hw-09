@@ -1,6 +1,7 @@
 import flatpickr from 'flatpickr';
-import 'flatpickr/dist/flatpickr.min.css';
 import Notiflix from 'notiflix';
+import 'flatpickr/dist/flatpickr.min.css';
+require('flatpickr/dist/themes/material_orange.css');
 const refs = {
   inputDate: document.querySelector('#datetime-picker '),
   setTimerBtn: document.querySelector('[data-start]'),
