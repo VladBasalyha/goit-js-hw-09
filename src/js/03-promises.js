@@ -25,7 +25,7 @@ function onSubmitBtn(evt) {
   let amountValue = Number(inputAmount.value);
   console.log(delayValue, stepValue, amountValue);
   evt.preventDefault();
-  for (position = 1; position <= amountValue; position += 1) {
+  for (let position = 1; position <= amountValue; position += 1) {
     let curPos = position;
     let curDelay = delayValue;
     setTimeout(
