@@ -18,11 +18,14 @@ const {
   minutesSpan,
   secondsSpan,
 } = refs;
+// default variables
 let currentTime = new Date();
 let selectedDatesUTC = 0;
 let intervalId = null;
+
 setTimerBtn.addEventListener('click', toStartTimer);
 setTimerBtn.disabled = true;
+
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -44,7 +47,9 @@ function toStartTimer() {
   setTimerBtn.disabled = true;
   intervalId = setInterval(() => {
     let nowUTC = new Date().getTime();
-    getTimerValue(nowUTC);
+    const { days, hours, minutes, seconds } = convertMs(
+      selectedDatesUTC - nowUTC
+    );
     let sumDateValue = days + hours + minutes + seconds;
     if (sumDateValue === 0) {
       clearInterval(intervalId);
@@ -55,10 +60,7 @@ function toStartTimer() {
     secondsSpan.textContent = padStart(seconds);
   }, 1000);
 }
-function getTimerValue(now) {
-  let timerValue = convertMs(selectedDatesUTC - now);
-  return ({ days, hours, minutes, seconds } = timerValue);
-}
+
 function convertMs(ms) {
   // Number of milliseconds per unit of time
   const second = 1000;

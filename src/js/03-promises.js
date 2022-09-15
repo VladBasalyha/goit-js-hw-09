@@ -1,27 +1,50 @@
 import Notiflix from 'notiflix';
 const refs = {
   inputDelay: document.querySelector(`input[name="delay"]`),
-  inputAmount: document.querySelector(`input[name="amount"]`),
   inputStep: document.querySelector(`input[name="step"]`),
+  inputAmount: document.querySelector(`input[name="amount"]`),
   submitBtn: document.querySelector(`button[type="submit"]`),
 };
 const { inputDelay, inputAmount, inputStep, submitBtn } = refs;
-
-let delayValue = Number(inputDelay.textContent);
-console.log(delayValue);
-
+let step = 1;
 submitBtn.addEventListener('click', onSubmitBtn);
 
-function createPromise(position, delay) {
-  const shouldResolve = Math.random() > 0.3;
-  if (shouldResolve) {
-    Notiflix.Notify.info('qwwe');
-  } else {
-    // Reject
-  }
+function createPromise(amountValue, delayValue) {
+  const shouldResolve = Math.random() > 0.5;
+  return new Promise((resolve, reject) => {
+    if (shouldResolve) {
+      resolve({ amountValue, delayValue });
+    } else {
+      reject({ amountValue, delayValue });
+    }
+  });
 }
 
 function onSubmitBtn(evt) {
+  let delayValue = Number(inputDelay.value);
+  let stepValue = Number(inputStep.value);
+  let amountValue = Number(inputAmount.value);
+  let delayStep = stepValue + delayValue;
+  console.log(delayValue, stepValue, amountValue);
   evt.preventDefault();
-  createPromise();
+  for (position = 1; position <= amountValue; position += 1) {
+    let curPos = position;
+    let curDelay = delayValue;
+    setTimeout(
+      () =>
+        createPromise(position, delayValue)
+          .then(({ position, delayValue }) => {
+            Notiflix.Notify.info(
+              `✅ Fulfilled promise ${curPos} in ${curDelay} ms`
+            );
+          })
+          .catch(({ position, delayValue }) => {
+            Notiflix.Notify.failure(
+              `✅ Fulfilled promise ${curPos} in ${curDelay} ms`
+            );
+          }),
+      delayValue
+    );
+    delayValue += stepValue;
+  }
 }
