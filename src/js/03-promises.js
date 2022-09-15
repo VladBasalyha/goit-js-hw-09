@@ -13,9 +13,9 @@ function createPromise(amountValue, delayValue) {
   const shouldResolve = Math.random() > 0.5;
   return new Promise((resolve, reject) => {
     if (shouldResolve) {
-      resolve({ amountValue, delayValue });
+      resolve(amountValue, delayValue);
     } else {
-      reject({ amountValue, delayValue });
+      reject(amountValue, delayValue);
     }
   });
 }
@@ -24,7 +24,6 @@ function onSubmitBtn(evt) {
   let delayValue = Number(inputDelay.value);
   let stepValue = Number(inputStep.value);
   let amountValue = Number(inputAmount.value);
-  let delayStep = stepValue + delayValue;
   console.log(delayValue, stepValue, amountValue);
   evt.preventDefault();
   for (position = 1; position <= amountValue; position += 1) {
@@ -33,12 +32,12 @@ function onSubmitBtn(evt) {
     setTimeout(
       () =>
         createPromise(position, delayValue)
-          .then(({ position, delayValue }) => {
+          .then((position, delayValue) => {
             Notiflix.Notify.info(
               `✅ Fulfilled promise ${curPos} in ${curDelay} ms`
             );
           })
-          .catch(({ position, delayValue }) => {
+          .catch((position, delayValue) => {
             Notiflix.Notify.failure(
               `✅ Fulfilled promise ${curPos} in ${curDelay} ms`
             );
