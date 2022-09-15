@@ -6,11 +6,10 @@ const refs = {
   submitBtn: document.querySelector(`button[type="submit"]`),
 };
 const { inputDelay, inputAmount, inputStep, submitBtn } = refs;
-let step = 1;
 submitBtn.addEventListener('click', onSubmitBtn);
 
 function createPromise(amountValue, delayValue) {
-  const shouldResolve = Math.random() > 0.5;
+  const shouldResolve = Math.random() > 0.3;
   return new Promise((resolve, reject) => {
     if (shouldResolve) {
       resolve(amountValue, delayValue);
